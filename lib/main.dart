@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './transaction.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -10,7 +12,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
       home: MyHomePage(),
     );
@@ -18,7 +20,12 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+  MyHomePage({super.key});
+
+  final List<Transaction> transactions = [
+    Transaction(id: 't1', title: 'New Shows', amount: 120.99, date: DateTime.now()),
+    Transaction(id: 't2', title: 'Weekly Groceries', amount: 50.35, date: DateTime.now())
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +33,65 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Flutter App'),
       ),
-      body: Column(children: <Widget>[
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
         Container(
           width: double.infinity,
-          child: Card(
+          child: const Card(
             color: Colors.blue,
             child: Text('Chart'),
             elevation: 5,
           )
         ),
-        Card(
-          child: Text('List of TX'),
+        Column(
+          children: transactions.map((transaction) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: Center(
+                            child: Text(
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              transaction.amount.toString() + ' \$'
+                            )
+                          )
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                  transaction.title,
+                                ),
+                                Text(transaction.date.toString()),
+                              ],
+                            )
+                          )
+                        )
+                      ],
+                    ),
+                  )
+                ),
+              );
+            }).toList(),
         ),
       ],)
     );
