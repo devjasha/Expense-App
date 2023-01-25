@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import './transaction.dart';
 
@@ -59,39 +60,43 @@ class MyHomePage extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           flex: 1,
-                          child: Center(
-                            child: Text(
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              transaction.amount.toString() + ' \$'
-                            )
-                          )
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Center(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  style: TextStyle(
-                                    fontSize: 16,
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  transaction.title,
-                                ),
-                                Text(
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black26,
-                                  ),
-                                  transaction.date.toString()
+                                  '\$ ${transaction.amount}'
                                 ),
                               ],
                             )
+                        ),
+                        Expanded(
+                          flex: 2,
+                            child: Container(
+                              margin: EdgeInsets.only(left: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                    transaction.title,
+                                  ),
+                                  Text(
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black26,
+                                    ),
+                                    DateFormat.yMMMd().format(transaction.date),
+                                  ),
+                                ],
+                              ),
+                            )
                           )
-                        )
                       ],
                     ),
                   )
