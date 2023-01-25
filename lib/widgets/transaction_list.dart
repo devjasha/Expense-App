@@ -13,8 +13,7 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: SingleChildScrollView(
-        child: Column(
+        child: ListView(
           children: transactions.map((transaction) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -69,7 +68,6 @@ class TransactionList extends StatelessWidget {
             );
           }).toList(),
         ),
-      ),
     );
   }
 }
